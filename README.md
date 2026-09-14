@@ -1,3 +1,3 @@
-## PAC man
+## root@arch$ pac man 
 Automate package maintenance
 
