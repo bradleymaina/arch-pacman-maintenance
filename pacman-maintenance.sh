@@ -27,7 +27,7 @@ update_mirrorlist(){
         return 1
    fi
 
-   rankmirrors -m 10 -w -n 6 /tmp/mirrorlist.new > /tmp/mirrorlist.ranked
+   rankmirrors -m 10 -w -n 6 -p /tmp/mirrorlist.new > /tmp/mirrorlist.ranked
 
    if [ "$?"  -ne 0 ]; then
         echo "Failed to rank mirrrors."
