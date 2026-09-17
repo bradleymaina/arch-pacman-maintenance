@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+exec 9>/tmp/pacman-maintenance.lock
+flock -n 9 || {
+    echo "Another instance of the script is already running."
+    exit 1
+}
 
 check_network(){
     ping -q -c 1 google.com
