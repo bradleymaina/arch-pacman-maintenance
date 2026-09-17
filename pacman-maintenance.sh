@@ -43,5 +43,14 @@ update_mirrorlist(){
     return 0
 }
 
+upgrade_system(){
+    sudo pacman -Syu --noconfirm || {
+        echo "System upgrade failed."
+        return 1
+    }
+
+}
+
 check_network || exit 1
 update_mirrorlist || exit 1 
+upgrade_system || exit 1
