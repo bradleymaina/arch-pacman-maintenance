@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
+set -o pipefail
+
 exec 9>/tmp/pacman-maintenance.lock
+
 flock -n 9 || {
     echo "Another instance of the script is already running."
     exit 1
@@ -26,7 +29,7 @@ update_mirrorlist(){
    # fetch live mirrorlist, filter and sort by speed and update the mirrorlist
    #used endpoint that returns a JSON object
    curl  -s "https://archlinux.org/mirrors/status/json/" \
-   |jq '.urls[] | select(.active and .completion_pct == 1.0 and .protocol == "https")' > /tmp/mirrorlist.new 
+   |jq -r '.urls[] | select(.active and .completion_pct == 1.0 and .protocol == "https") | "Server = \(.url)$repo/os/$arch"' > /tmp/mirrorlist.new 
 
    if [ "$?" -ne 0 ]; then
         echo "Failed to fetch mirrorlist."
