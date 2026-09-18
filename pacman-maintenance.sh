@@ -26,7 +26,7 @@ update_mirrorlist(){
    # fetch live mirrorlist, filter and sort by speed and update the mirrorlist
    #used endpoint that returns a JSON object
    curl  -s "https://archlinux.org/mirrors/status/json/" \
-   |jq '.urls[] | select(.active and .completion_pct == 0.1 and .protocols == "https")' > /tmp/mirrorlist.new 
+   |jq '.urls[] | select(.active and .completion_pct == 1.0 and .protocol == "https")' > /tmp/mirrorlist.new 
 
    if [ "$?" -ne 0 ]; then
         echo "Failed to fetch mirrorlist."
