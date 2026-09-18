@@ -24,8 +24,9 @@ update_mirrorlist(){
    }
 
    # fetch live mirrorlist, filter and sort by speed and update the mirrorlist
-   curl  "https://archlinux.org/mirrorlist/?country=all&protocol=https&use_mirror_status=on" \
-   | sed -e 's/^#Server/Server/' -e '/^#/d' > /tmp/mirrorlist.new 
+   #used endpoint that returns a JSON object
+   curl  -s "https://archlinux.org/mirrors/status/json/" \
+   |jq '.urls[] | select(.active and .completion_pct == 0.1 and .protocols == "https")' > /tmp/mirrorlist.new 
 
    if [ "$?" -ne 0 ]; then
         echo "Failed to fetch mirrorlist."
