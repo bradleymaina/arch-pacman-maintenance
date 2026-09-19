@@ -31,7 +31,7 @@ check_network(){
 
 update_mirrorlist(){
    # safely backup exisisting mirrorlist
-   sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup || {
+   cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup || {
         log "ERROR" "Failed to backup mirrorlist."
         return 1
    }
@@ -63,7 +63,7 @@ update_mirrorlist(){
 }
 
 upgrade_system(){
-    sudo pacman -Syu --noconfirm
+    pacman -Syu --noconfirm
 
     if [ "$?" -eq 0 ]; then
         log "INFO" "System upgraded successfully."
